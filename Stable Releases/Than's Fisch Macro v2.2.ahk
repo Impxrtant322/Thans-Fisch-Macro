@@ -9,7 +9,7 @@ CoordMode, ToolTip, Client
 ControlRod := 0.05
 navigationKey := "\"
 shaketimeout := 50
-alternatecolors := false
+alternatecolors := False
 
 ; DONT TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
 clickholdtime := 50
@@ -151,9 +151,9 @@ $p::
 	global cameraIconY := Floor(WindowHeight * (37 / 1080))
 	global toolTipBarY := Floor(WindowHeight - (WindowHeight * (80 / 1080)))
 	global NavigationKey := NavigationKey
-	global offset := rodControl > 0.06 ? 0 : 20
-	global catchBarColor := !AlternateColors ? "0xFFFFFF" : "0xf1f1f1"
-	global fishBarColor := !AlternateColors ? "0x7d8aa6" : "0x434b5b"
+	global offset := rodControl > 0.06 ? 0 : 30
+	global catchBarColor := (AlternateColors = "True" || AlternateColors = "true") ? "0xFFFFFF" : "0xf1f1f1"
+	global fishBarColor := (AlternateColors = "True" || AlternateColors = "true") ? "0x7d8aa6" : "0x434b5b"
 	tooltip, Made By Thansar25, %TooltipX%, %Tooltip1%, 1
 	tooltip, Screen: %WindowWidth% x %WindowHeight%, %TooltipX%, %Tooltip3%, 3
 	tooltip, Current Task: Waiting..., %TooltipX%, %Tooltip2%, 2
@@ -246,7 +246,7 @@ $p::
 												}
 											}
 										}
-										Tooltip, % "Fish at right for: " A_Index " ms", WindowWidth / 2, ToolTipBarY + 25, 10
+										Tooltip, % "Fish at right for: " A_Index " ticks", WindowWidth / 2, ToolTipBarY + 25, 10
 										PixelSearch, CurrentTarget,, fishBarLeftX, fishBarYAlt, fishBarRightX, fishBarYAlt, fishBarColor, 5, FastRGB
 										If (ErrorLevel = 0) {
 											tooltip, ., CurrentTarget, toolTipBarY - 3, 6
@@ -316,11 +316,11 @@ $p::
 											tooltip, |, CurrentBarPositionRight, toolTipBarY, 9
 											if (Percentage >= 0) {
 												Val := Floor(140 + ((440 - 140) * (Percentage / 100))) + 100
-												tooltip % "Holding left click for: " Val " ms " Distance, WindowWidth / 2, ToolTipBarY + 25, 10
+												tooltip % "Holding left click for: " Val " ticks " Distance, WindowWidth / 2, ToolTipBarY + 25, 10
 												If (Val = 0) {
 													Reels(clickHoldTime)
 												} else {
-													Reels(Abs(Distance) > 150 ? Val : Val / 2)
+													Reels(Abs(Distance) > 200 ? Val : Val / 1.5)
 												}
 											} else {
 												Val := 0 + ((100 - 0) * (Percentage / 100))
@@ -330,7 +330,7 @@ $p::
 													Reels(clickHoldTime - 10)
 												} else {
 													tooltip % Val - 50 " sleeptime", WindowWidth / 2, ToolTipBarY + 25, 10
-													Sleep Abs(Distance) > 150 ? sleeptime : sleeptime / 2
+													;Sleep Abs(Distance) > 250 ? sleeptime / 5 : sleeptime / 6
 												}
 											}
 										}
@@ -388,11 +388,11 @@ $p::
 												tooltip, |, CurrentBarPositionRight, toolTipBarY, 9
 												if (Percentage >= 0) {
 													Val := Floor(140 + ((440 - 140) * (Percentage / 100))) + 100
-													tooltip % "Holding left click for: " Val " ms " Distance, WindowWidth / 2, ToolTipBarY + 25, 10
+													tooltip % "Holding left click for: " Val " ticks " Distance, WindowWidth / 2, ToolTipBarY + 25, 10
 													If (Val = 0) {
 														Reels(clickHoldTime)
 													} else {
-														Reels(Abs(Distance) > 150 ? Val : Val / 2)
+														Reels(Abs(Distance) > 200 ? Val : Val / 1.5)
 													}
 												} else {
 													Val := 0 + ((100 - 0) * (Percentage / 100))
@@ -402,7 +402,7 @@ $p::
 														Reels(clickHoldTime - 10)
 													} else {
 														tooltip % Val - 50 " sleeptime", WindowWidth / 2, ToolTipBarY + 25, 10
-														Sleep Abs(Distance) > 150 ? sleeptime : sleeptime / 2
+														;Sleep Abs(Distance) > 250 ? sleeptime / 5 : sleeptime / 6
 													}
 												}
 											}
@@ -468,7 +468,7 @@ $p::
 											}
 										}
 									}
-									Tooltip, % "Fish at right for: " A_Index " ms", WindowWidth / 2, ToolTipBarY + 25, 10
+									Tooltip, % "Fish at right for: " A_Index " ticks", WindowWidth / 2, ToolTipBarY + 25, 10
 									PixelSearch, CurrentTarget,, fishBarLeftX, fishBarYAlt, fishBarRightX, fishBarYAlt, fishBarColor, 5, FastRGB
 									If (ErrorLevel = 0) {
 										tooltip, ., CurrentTarget, toolTipBarY - 3, 6
